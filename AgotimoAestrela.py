@@ -31,8 +31,11 @@ def h1(estado): #Heurística 1
 
 def h2(estado): #Heurística 2
     qntdPecasForaSeq = 0
-    vetorPosicoes = [4, 8, 12, 13, 14, 11, 7, 3, 2, 1, 5, 9, 10, 6]
-    
+    #vetorPosicoes = [4, 8, 12, 13, 14, 11, 7, 3, 2, 1, 5, 9, 10, 6]\
+    vetorPosicoes = [4, 8, 12, 1, 5, 9, 13, 2, 6, 10, 14,  2, 7, 11]
+
+    #mas oque é isso deputado ?
+
     for i in vetorPosicoes:
         if ((estado.matriz[i] +1) != estado.matriz[i +1]):
             qntdPecasForaSeq = qntdPecasForaSeq +1
@@ -44,7 +47,7 @@ def h3(estado): #Heurística 3
                  (1,0), (1,1), (1,2), (1,3),
                  (2,0), (2,1), (2,2), (2,3),
                  (3,0), (3,1), (3,2), (3,3)]
-    vetorPerfeito = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16]
+    vetorPerfeito = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 0]
     
     distRetangular = 0
     for i in range(16):
@@ -56,7 +59,7 @@ def h3(estado): #Heurística 3
 
 def calculadistRetangular(elementoA, elementoB):
     return (abs(elementoA[0] - elementoB[0]) + abs(elementoA[1] - elementoB[1]))
-
+''''
 def h4(estado): #Heurística 4
     h1(estado)
     resultadoH1 = estado.h
@@ -84,7 +87,7 @@ def h5(estado): #Heurística 5
     resultadoH3 = estado.h
 
     estado.h = max(resultadoH1, resultadoH2, resultadoH3)
-
+'''
 ## BLOCO FUNÇÕES AUXILIARES ##
 def r(estadoPai):    
     pos_zero = estadoPai.matriz.index(0)
@@ -123,7 +126,7 @@ def rotacionaEstado(estadoOriginal, pos_zero, deslocamento):
         estado.identificador = idMatrizRotacao
 
         if (obterEstado(dicionarioFechados, idMatrizRotacao) == -1):
-            h3(estado) #Calcula a heurística
+            h2(estado) #Calcula a heurística
             adicionaNoDicionario(dicionarioAbertos, estado)
             adicionaEstadoNoHeap(estado)
 
