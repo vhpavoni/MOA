@@ -250,11 +250,11 @@ class AlgoritmoGenetico:
                 while m != None:
                     if (i == 0 
                             and (m not in medianas_filho_1)
-                            and (len(medianas_filho_1) < 15)):
+                            and (len(medianas_filho_1) < numero_medianas)):
                         medianas_filho_1.append(m)
                         m = None
                     elif (m not in medianas_filho_2
-                            and (len(medianas_filho_2) < 15)):
+                            and (len(medianas_filho_2) < numero_medianas)):
                         medianas_filho_2.append(m)
                         m = None
                 
@@ -279,7 +279,9 @@ class AlgoritmoGenetico:
     def reproduzir(self, selecionados):
         filhos = []
         size_selecionados = len(selecionados)
-        for i in range(0, size_selecionados):
+        #for i in range(0, size_selecionados):
+        for _ in range(2):
+            i = random.randrange(size_selecionados)
             pai = selecionados[i]
             if i == size_selecionados - 1:
                 mae = selecionados[0]
@@ -307,6 +309,7 @@ class AlgoritmoGenetico:
         self.relatorio = "[\n{}]".format(self.relatorio)
         f.write(self.relatorio)
         f.close()
+
 
     def busca_local(self, filho):        
         copia_filho = deepcopy(filho)        
@@ -349,14 +352,14 @@ class AlgoritmoGenetico:
                 melhor = melhor_filho
 
             self.relatorio += "[{}, {}],\n".format(self.geracao, melhor.fitness())
-
+            print("Melhor da geração {}:{}".format(self.geracao,melhor))
             populacao = Populacao(selecionados + filhos)                    
             
         self.save_relatorio()
         return melhor
 
 if (__name__ == "__main__"):                    
-    linhas = open('teste', 'r').readlines()        
+    linhas = open('p3038_900.txt', 'r').readlines()
     primeiralinha = linhas.pop(0).split()
         
     numero_pontos = int(primeiralinha[0])
@@ -365,7 +368,7 @@ if (__name__ == "__main__"):
 
     while linhas:                        
         x, y, capacidade, demanda = linhas.pop(0).split()        
-        vertices.append(Vertice((int(x), int(y)), int(capacidade), int(demanda)))    
+        vertices.append(Vertice((float(x), float(y)), float(capacidade), float(demanda)))
     
     # Parte para enviar
     # primeiralinha = input()
@@ -387,13 +390,13 @@ if (__name__ == "__main__"):
     #     vertices.append(vertice)            
     
     # random.seed(10)        
-    tamanho_populacao = 10
-    quantidade_torneio = 6
-    maximo_geracoes = 30
+    tamanho_populacao = 1
+    quantidade_torneio = 3
+    maximo_geracoes = 2
     pcross_over = 0.98
     pmutacao = 0.10
-    utilizar_busca_local = False
-    limite_tempo = 10000
+    utilizar_busca_local = True
+    limite_tempo = 300
 
     ag = AlgoritmoGenetico(        
         vertices,
